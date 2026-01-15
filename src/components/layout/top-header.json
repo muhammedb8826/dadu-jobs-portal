@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_layout_top_headers",
+  "info": {
+    "displayName": "Top Header"
+  },
+  "options": {},
+  "attributes": {
+    "cta": {
+      "type": "component",
+      "component": "common.link-with-icon",
+      "repeatable": true
+    },
+    "socialIcon": {
+      "type": "component",
+      "component": "common.social-icon",
+      "repeatable": true
+    },
+    "button": {
+      "type": "component",
+      "component": "components.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

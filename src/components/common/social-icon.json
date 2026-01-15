@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_common_social_icons",
+  "info": {
+    "displayName": "Social Icon"
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "customField",
+      "customField": "plugin::strapi-plugin-iconhub.iconhub",
+      "options": {
+        "storeIconData": true,
+        "storeIconName": true
+      }
+    }
+  },
+  "config": {}
+}
