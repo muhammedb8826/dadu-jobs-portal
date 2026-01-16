@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_salary_ranges",
+  "info": {
+    "displayName": "Salary Range"
+  },
+  "options": {},
+  "attributes": {
+    "min": {
+      "type": "integer"
+    },
+    "max": {
+      "type": "integer"
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "ETB",
+        "USD",
+        "EUR"
+      ]
+    },
+    "isNegotiable": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "config": {}
+}

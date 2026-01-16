@@ -20,9 +20,12 @@ export default ({ env }) => ({
 
   'users-permissions': {
     config: {
+      register: {
+        allowedFields: ['type', 'firstName', 'lastName'],
+      },
       emailConfirmation: {
         enabled: true,
-        redirectUrl: `${env('FRONTEND_URL', 'https://admission.qenenia.com')}/email-confirmation`,
+        redirectUrl: `${env('FRONTEND_URL', 'https://jobs.qenenia.com')}/email-confirmation`,
       },
     },
   },

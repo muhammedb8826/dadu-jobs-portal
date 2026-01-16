@@ -1,0 +1,95 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jobs",
+  "info": {
+    "singularName": "job",
+    "pluralName": "jobs",
+    "displayName": "Job"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::jodit-editor.jodit",
+      "options": {
+        "height": 400,
+        "readonly": false,
+        "buttons": "source, bold, italic, underline, strikethrough, superscript, subscript, eraser, font, fontsize, brush, paragraph, classSpan, |, ul, ol, indent, outdent, left, center, right, justify, |, link, unlink, strapiMedia, image, file, video, table, hr, symbols, lineHeight, |, copy, cut, paste, copyformat, selectall, undo, redo, fullsize, print, preview, find, spellcheck, about",
+        "toolbar": true,
+        "fonts": "",
+        "webp": ""
+      }
+    },
+    "workplaceType": {
+      "type": "enumeration",
+      "enum": [
+        "Remote",
+        "On Site",
+        "Hybrid"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "jobType": {
+      "type": "enumeration",
+      "enum": [
+        "Full Time",
+        "Part Time",
+        "Contract",
+        "Internship"
+      ]
+    },
+    "salary": {
+      "type": "component",
+      "component": "shared.salary-range",
+      "repeatable": false
+    },
+    "experience": {
+      "type": "enumeration",
+      "enum": [
+        "Entry",
+        "Mid",
+        "Senior",
+        "Director"
+      ]
+    },
+    "deadline": {
+      "type": "date"
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "jobs"
+    },
+    "approvalStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Pending",
+        "Approved",
+        "Rejected",
+        "Needs Modification"
+      ]
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "jobs"
+    }
+  }
+}

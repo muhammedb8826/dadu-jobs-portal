@@ -18,14 +18,19 @@
     "slug": {
       "type": "uid"
     },
-    "articles": {
+    "icon": {
+      "type": "customField",
+      "customField": "plugin::strapi-plugin-iconhub.iconhub",
+      "options": {
+        "storeIconData": true,
+        "storeIconName": true
+      }
+    },
+    "jobs": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::article.article",
+      "target": "api::job.job",
       "mappedBy": "category"
-    },
-    "description": {
-      "type": "text"
     }
   }
 }

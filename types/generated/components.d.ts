@@ -169,6 +169,19 @@ export interface SharedRichText extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSalaryRange extends Struct.ComponentSchema {
+  collectionName: 'components_shared_salary_ranges';
+  info: {
+    displayName: 'Salary Range';
+  };
+  attributes: {
+    currency: Schema.Attribute.Enumeration<['ETB', 'USD', 'EUR']>;
+    isNegotiable: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    max: Schema.Attribute.Integer;
+    min: Schema.Attribute.Integer;
+  };
+}
+
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
@@ -212,6 +225,7 @@ declare module '@strapi/strapi' {
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
+      'shared.salary-range': SharedSalaryRange;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
     }
