@@ -5,6 +5,13 @@
   },
   "options": {},
   "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "menu": {
       "type": "component",
       "component": "components.link",
@@ -13,7 +20,7 @@
     "button": {
       "type": "component",
       "component": "components.link",
-      "repeatable": false
+      "repeatable": true
     }
   },
   "config": {}

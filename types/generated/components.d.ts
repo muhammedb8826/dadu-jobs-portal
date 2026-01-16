@@ -49,12 +49,54 @@ export interface ComponentsLink extends Struct.ComponentSchema {
   };
 }
 
+export interface LayoutAboutFooter extends Struct.ComponentSchema {
+  collectionName: 'components_layout_about_footer_s';
+  info: {
+    displayName: 'About(footer)';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface LayoutContactFooter extends Struct.ComponentSchema {
+  collectionName: 'components_layout_contact_footer_s';
+  info: {
+    displayName: 'Contact(Footer)';
+  };
+  attributes: {
+    address: Schema.Attribute.String;
+    link: Schema.Attribute.Component<'common.link-with-icon', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface LayoutFollowUs extends Struct.ComponentSchema {
+  collectionName: 'components_layout_follow_uses';
+  info: {
+    displayName: 'Follow Us';
+  };
+  attributes: {
+    socialLinks: Schema.Attribute.Component<'common.social-icon', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface LayoutFooter extends Struct.ComponentSchema {
   collectionName: 'components_layout_footers';
   info: {
     displayName: 'Footer';
   };
-  attributes: {};
+  attributes: {
+    about: Schema.Attribute.Component<'layout.about-footer', false>;
+    contactInformation: Schema.Attribute.Component<
+      'layout.contact-footer',
+      false
+    >;
+    followUs: Schema.Attribute.Component<'layout.follow-us', false>;
+    quickLinks: Schema.Attribute.Component<'layout.quick-links-about', false>;
+  };
 }
 
 export interface LayoutHeader extends Struct.ComponentSchema {
@@ -63,8 +105,20 @@ export interface LayoutHeader extends Struct.ComponentSchema {
     displayName: 'Header';
   };
   attributes: {
-    button: Schema.Attribute.Component<'components.link', false>;
+    button: Schema.Attribute.Component<'components.link', true>;
+    logo: Schema.Attribute.Media<'images'>;
     menu: Schema.Attribute.Component<'components.link', true>;
+  };
+}
+
+export interface LayoutQuickLinksAbout extends Struct.ComponentSchema {
+  collectionName: 'components_layout_quick_links_about_s';
+  info: {
+    displayName: 'Quick Links(About)';
+  };
+  attributes: {
+    link: Schema.Attribute.Component<'components.link', true>;
+    title: Schema.Attribute.String;
   };
 }
 
@@ -148,8 +202,12 @@ declare module '@strapi/strapi' {
       'common.link-with-icon': CommonLinkWithIcon;
       'common.social-icon': CommonSocialIcon;
       'components.link': ComponentsLink;
+      'layout.about-footer': LayoutAboutFooter;
+      'layout.contact-footer': LayoutContactFooter;
+      'layout.follow-us': LayoutFollowUs;
       'layout.footer': LayoutFooter;
       'layout.header': LayoutHeader;
+      'layout.quick-links-about': LayoutQuickLinksAbout;
       'layout.top-header': LayoutTopHeader;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;

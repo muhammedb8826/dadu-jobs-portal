@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_layout_about_footer_s",
+  "info": {
+    "displayName": "About(footer)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

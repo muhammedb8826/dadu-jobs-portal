@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_layout_follow_uses",
+  "info": {
+    "displayName": "Follow Us"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "socialLinks": {
+      "type": "component",
+      "component": "common.social-icon",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

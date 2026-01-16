@@ -4,6 +4,27 @@
     "displayName": "Footer"
   },
   "options": {},
-  "attributes": {},
+  "attributes": {
+    "about": {
+      "type": "component",
+      "component": "layout.about-footer",
+      "repeatable": false
+    },
+    "quickLinks": {
+      "type": "component",
+      "component": "layout.quick-links-about",
+      "repeatable": false
+    },
+    "contactInformation": {
+      "type": "component",
+      "component": "layout.contact-footer",
+      "repeatable": false
+    },
+    "followUs": {
+      "type": "component",
+      "component": "layout.follow-us",
+      "repeatable": false
+    }
+  },
   "config": {}
 }

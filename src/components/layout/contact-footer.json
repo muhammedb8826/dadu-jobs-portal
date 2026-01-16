@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_layout_contact_footer_s",
+  "info": {
+    "displayName": "Contact(Footer)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "link": {
+      "type": "component",
+      "component": "common.link-with-icon",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
