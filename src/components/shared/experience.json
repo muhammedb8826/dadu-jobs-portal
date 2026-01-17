@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_experiences",
+  "info": {
+    "displayName": "Experience"
+  },
+  "options": {},
+  "attributes": {
+    "companyName": {
+      "type": "string"
+    },
+    "jobTitle": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "isCurrent": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "blocks"
+    }
+  },
+  "config": {}
+}

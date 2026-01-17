@@ -567,6 +567,46 @@ export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCandidateProfileCandidateProfile
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'candidate_profiles';
+  info: {
+    displayName: 'Candidate Profile';
+    pluralName: 'candidate-profiles';
+    singularName: 'candidate-profile';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bio: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    education: Schema.Attribute.Component<'shared.education', true>;
+    experience: Schema.Attribute.Component<'shared.experience', true>;
+    fullName: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::candidate-profile.candidate-profile'
+    > &
+      Schema.Attribute.Private;
+    phone: Schema.Attribute.String;
+    profilePicture: Schema.Attribute.Media<'images' | 'files'>;
+    publishedAt: Schema.Attribute.DateTime;
+    resume: Schema.Attribute.Media<'images' | 'files' | 'audios'>;
+    skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -590,7 +630,7 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
           storeIconName: true;
         }
       >;
-    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
+    job: Schema.Attribute.Relation<'manyToOne', 'api::job.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -617,40 +657,91 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    bio: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::jodit-editor.jodit',
-        {
-          buttons: 'source, bold, italic, underline, strikethrough, superscript, subscript, eraser, font, fontsize, brush, paragraph, classSpan, |, ul, ol, indent, outdent, left, center, right, justify, |, link, unlink, strapiMedia, image, file, video, table, hr, symbols, lineHeight, |, copy, cut, paste, copyformat, selectall, undo, redo, fullsize, print, preview, find, spellcheck, about';
-          fonts: '';
-          height: 400;
-          readonly: false;
-          toolbar: true;
-          webp: '';
-        }
-      >;
+    companySize: Schema.Attribute.Enumeration<
+      ['I(1-10)', 'II(1-50)', 'III(51-200)', 'IV(201-500)', 'V(500+)']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
+    description: Schema.Attribute.RichText;
+    employers: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::employer-profile.employer-profile'
+    >;
+    industry: Schema.Attribute.Enumeration<
+      [
+        'Technology',
+        'Healthcare',
+        'Finance',
+        'Education',
+        'Manufacturing',
+        'Retail',
+        'Hospitality',
+        'Construction',
+        'Consulting',
+        'Other',
+      ]
+    >;
+    job: Schema.Attribute.Relation<'oneToOne', 'api::job.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::company.company'
     > &
       Schema.Attribute.Private;
+    location: Schema.Attribute.String;
     logo: Schema.Attribute.Media<'images', true>;
     name: Schema.Attribute.String;
     owner: Schema.Attribute.Relation<
-      'manyToOne',
+      'oneToOne',
       'plugin::users-permissions.user'
     >;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID;
+    socialLinks: Schema.Attribute.Component<'common.link-with-icon', true>;
+    tagline: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     website: Schema.Attribute.String;
+  };
+}
+
+export interface ApiEmployerProfileEmployerProfile
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'employer_profiles';
+  info: {
+    displayName: 'Employer profile';
+    pluralName: 'employer-profiles';
+    singularName: 'employer-profile';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bio: Schema.Attribute.Text;
+    company: Schema.Attribute.Relation<'manyToOne', 'api::company.company'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fullName: Schema.Attribute.String;
+    jobTitle: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::employer-profile.employer-profile'
+    > &
+      Schema.Attribute.Private;
+    phone: Schema.Attribute.String;
+    profilePicture: Schema.Attribute.Media<'images' | 'files'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -703,8 +794,11 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     approvalStatus: Schema.Attribute.Enumeration<
       ['Pending', 'Approved', 'Rejected', 'Needs Modification']
     >;
-    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
-    company: Schema.Attribute.Relation<'manyToOne', 'api::company.company'>;
+    categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category.category'
+    >;
+    company: Schema.Attribute.Relation<'oneToOne', 'api::company.company'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -742,6 +836,36 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     workplaceType: Schema.Attribute.Enumeration<
       ['Remote', 'On Site', 'Hybrid']
     >;
+  };
+}
+
+export interface ApiSkillSkill extends Struct.CollectionTypeSchema {
+  collectionName: 'skills';
+  info: {
+    displayName: 'Skill';
+    pluralName: 'skills';
+    singularName: 'skill';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    candidate_profile: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::candidate-profile.candidate-profile'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    level: Schema.Attribute.Enumeration<['Beginner', 'Intermediate', 'Expert']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    skillName: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1203,7 +1327,11 @@ export interface PluginUsersPermissionsUser
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    companies: Schema.Attribute.Relation<'oneToMany', 'api::company.company'>;
+    candidate_profile: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::candidate-profile.candidate-profile'
+    >;
+    company: Schema.Attribute.Relation<'oneToOne', 'api::company.company'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -1214,6 +1342,10 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    employer_profile: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::employer-profile.employer-profile'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1260,10 +1392,13 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
+      'api::candidate-profile.candidate-profile': ApiCandidateProfileCandidateProfile;
       'api::category.category': ApiCategoryCategory;
       'api::company.company': ApiCompanyCompany;
+      'api::employer-profile.employer-profile': ApiEmployerProfileEmployerProfile;
       'api::global.global': ApiGlobalGlobal;
       'api::job.job': ApiJobJob;
+      'api::skill.skill': ApiSkillSkill;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

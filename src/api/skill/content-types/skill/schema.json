@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "skills",
+  "info": {
+    "singularName": "skill",
+    "pluralName": "skills",
+    "displayName": "Skill"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "skillName": {
+      "type": "string"
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "Beginner",
+        "Intermediate",
+        "Expert"
+      ]
+    },
+    "candidate_profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::candidate-profile.candidate-profile",
+      "inversedBy": "skills"
+    }
+  }
+}

@@ -66,11 +66,11 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "companies": {
+    "company": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::company.company",
-      "mappedBy": "owner"
+      "inversedBy": "owner"
     },
     "type": {
       "type": "enumeration",
@@ -78,6 +78,18 @@
         "EMPLOYER",
         "CANDIDATE"
       ]
+    },
+    "candidate_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::candidate-profile.candidate-profile",
+      "mappedBy": "user"
+    },
+    "employer_profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::employer-profile.employer-profile",
+      "inversedBy": "user"
     }
   }
 }

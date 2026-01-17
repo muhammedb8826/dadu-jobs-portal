@@ -24,32 +24,65 @@
     "website": {
       "type": "string"
     },
-    "bio": {
-      "type": "customField",
-      "customField": "plugin::jodit-editor.jodit",
-      "options": {
-        "height": 400,
-        "readonly": false,
-        "buttons": "source, bold, italic, underline, strikethrough, superscript, subscript, eraser, font, fontsize, brush, paragraph, classSpan, |, ul, ol, indent, outdent, left, center, right, justify, |, link, unlink, strapiMedia, image, file, video, table, hr, symbols, lineHeight, |, copy, cut, paste, copyformat, selectall, undo, redo, fullsize, print, preview, find, spellcheck, about",
-        "toolbar": true,
-        "fonts": "",
-        "webp": ""
-      }
+    "location": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "industry": {
+      "type": "enumeration",
+      "enum": [
+        "Technology",
+        "Healthcare",
+        "Finance",
+        "Education",
+        "Manufacturing",
+        "Retail",
+        "Hospitality",
+        "Construction",
+        "Consulting",
+        "Other"
+      ]
+    },
+    "companySize": {
+      "type": "enumeration",
+      "enum": [
+        "I(1-10)",
+        "II(1-50)",
+        "III(51-200)",
+        "IV(201-500)",
+        "V(500+)"
+      ]
     },
     "slug": {
       "type": "uid"
     },
-    "jobs": {
+    "job": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::job.job",
-      "mappedBy": "company"
+      "inversedBy": "company"
     },
     "owner": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "companies"
+      "mappedBy": "company"
+    },
+    "employers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::employer-profile.employer-profile",
+      "mappedBy": "company"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "socialLinks": {
+      "type": "component",
+      "component": "common.link-with-icon",
+      "repeatable": true
     }
   }
 }

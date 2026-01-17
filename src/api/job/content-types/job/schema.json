@@ -72,9 +72,9 @@
     },
     "company": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToOne",
       "target": "api::company.company",
-      "inversedBy": "jobs"
+      "mappedBy": "job"
     },
     "approvalStatus": {
       "type": "enumeration",
@@ -85,11 +85,11 @@
         "Needs Modification"
       ]
     },
-    "category": {
+    "categories": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "oneToMany",
       "target": "api::category.category",
-      "inversedBy": "jobs"
+      "mappedBy": "job"
     }
   }
 }

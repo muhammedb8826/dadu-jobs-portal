@@ -26,11 +26,11 @@
         "storeIconName": true
       }
     },
-    "jobs": {
+    "job": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "api::job.job",
-      "mappedBy": "category"
+      "inversedBy": "categories"
     }
   }
 }

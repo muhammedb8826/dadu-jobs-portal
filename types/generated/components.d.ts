@@ -134,6 +134,37 @@ export interface LayoutTopHeader extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedEducation extends Struct.ComponentSchema {
+  collectionName: 'components_shared_educations';
+  info: {
+    displayName: 'Education';
+  };
+  attributes: {
+    degree: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    endDate: Schema.Attribute.Date;
+    fieldOfStudy: Schema.Attribute.String;
+    institution: Schema.Attribute.String;
+    startDate: Schema.Attribute.Date;
+  };
+}
+
+export interface SharedExperience extends Struct.ComponentSchema {
+  collectionName: 'components_shared_experiences';
+  info: {
+    displayName: 'Experience';
+  };
+  attributes: {
+    companyName: Schema.Attribute.String;
+    description: Schema.Attribute.Blocks;
+    endDate: Schema.Attribute.Date;
+    isCurrent: Schema.Attribute.Boolean;
+    jobTitle: Schema.Attribute.String;
+    location: Schema.Attribute.String;
+    startDate: Schema.Attribute.Date;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -222,6 +253,8 @@ declare module '@strapi/strapi' {
       'layout.header': LayoutHeader;
       'layout.quick-links-about': LayoutQuickLinksAbout;
       'layout.top-header': LayoutTopHeader;
+      'shared.education': SharedEducation;
+      'shared.experience': SharedExperience;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_educations",
+  "info": {
+    "displayName": "Education"
+  },
+  "options": {},
+  "attributes": {
+    "institution": {
+      "type": "string"
+    },
+    "degree": {
+      "type": "string"
+    },
+    "fieldOfStudy": {
+      "type": "string"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "description": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

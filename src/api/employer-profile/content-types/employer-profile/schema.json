@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "employer_profiles",
+  "info": {
+    "singularName": "employer-profile",
+    "pluralName": "employer-profiles",
+    "displayName": "Employer profile"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullName": {
+      "type": "string"
+    },
+    "jobTitle": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "profilePicture": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "bio": {
+      "type": "text"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "employers"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "employer_profile"
+    }
+  }
+}
