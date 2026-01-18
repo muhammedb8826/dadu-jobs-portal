@@ -748,6 +748,9 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
       ['Entry', 'Mid', 'Senior', 'Director']
     >;
     isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    jobCode: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     jobType: Schema.Attribute.Enumeration<
       ['Full Time', 'Part Time', 'Contract', 'Internship']
     >;
@@ -762,6 +765,10 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
     workplaceType: Schema.Attribute.Enumeration<
       ['Remote', 'On Site', 'Hybrid']
     >;
@@ -1275,6 +1282,7 @@ export interface PluginUsersPermissionsUser
       'oneToOne',
       'api::employer-profile.employer-profile'
     >;
+    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

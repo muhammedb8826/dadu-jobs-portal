@@ -90,6 +90,17 @@
       "relation": "oneToMany",
       "target": "api::category.category",
       "mappedBy": "job"
+    },
+    "jobCode": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "jobs"
     }
   }
 }

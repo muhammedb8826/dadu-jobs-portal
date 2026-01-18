@@ -90,6 +90,12 @@
       "relation": "oneToOne",
       "target": "api::employer-profile.employer-profile",
       "inversedBy": "user"
+    },
+    "jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::job.job",
+      "mappedBy": "user"
     }
   }
 }
