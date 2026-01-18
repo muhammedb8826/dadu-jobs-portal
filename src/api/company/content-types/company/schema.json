@@ -58,11 +58,11 @@
     "slug": {
       "type": "uid"
     },
-    "job": {
+    "jobs": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::job.job",
-      "inversedBy": "company"
+      "mappedBy": "company"
     },
     "owner": {
       "type": "relation",

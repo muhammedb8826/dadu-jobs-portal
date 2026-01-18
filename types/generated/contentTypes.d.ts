@@ -611,7 +611,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
         'Other',
       ]
     >;
-    job: Schema.Attribute.Relation<'oneToOne', 'api::job.job'>;
+    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -727,7 +727,7 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::category.category'
     >;
-    company: Schema.Attribute.Relation<'oneToOne', 'api::company.company'>;
+    company: Schema.Attribute.Relation<'manyToOne', 'api::company.company'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
