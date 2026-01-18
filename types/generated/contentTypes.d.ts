@@ -747,6 +747,7 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     experience: Schema.Attribute.Enumeration<
       ['Entry', 'Mid', 'Senior', 'Director']
     >;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     jobCode: Schema.Attribute.String &
       Schema.Attribute.Required &

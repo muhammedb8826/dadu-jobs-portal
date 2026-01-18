@@ -101,6 +101,10 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "jobs"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
