@@ -24,6 +24,9 @@
       "type": "component",
       "component": "layout.follow-us",
       "repeatable": false
+    },
+    "copyRight": {
+      "type": "string"
     }
   },
   "config": {}

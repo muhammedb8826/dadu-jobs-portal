@@ -94,6 +94,7 @@ export interface LayoutFooter extends Struct.ComponentSchema {
       'layout.contact-footer',
       false
     >;
+    copyRight: Schema.Attribute.String;
     followUs: Schema.Attribute.Component<'layout.follow-us', false>;
     quickLinks: Schema.Attribute.Component<'layout.quick-links-about', false>;
   };
