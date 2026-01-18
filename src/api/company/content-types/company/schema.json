@@ -83,6 +83,10 @@
       "type": "component",
       "component": "common.link-with-icon",
       "repeatable": true
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

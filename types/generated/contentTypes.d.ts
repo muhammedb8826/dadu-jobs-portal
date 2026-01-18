@@ -611,6 +611,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
         'Other',
       ]
     >;
+    isFeatured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
