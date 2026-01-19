@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "applications",
+  "info": {
+    "singularName": "application",
+    "pluralName": "applications",
+    "displayName": "Application"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "job": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::job.job",
+      "inversedBy": "applications"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "applications"
+    },
+    "decision": {
+      "type": "enumeration",
+      "default": "Not Selected",
+      "enum": [
+        "Selected",
+        "Reserve",
+        "Not Selected"
+      ]
+    },
+    "applicationStatus": {
+      "type": "enumeration",
+      "default": "Applied",
+      "enum": [
+        "Applied",
+        "Shortlisted",
+        "Rejected"
+      ]
+    },
+    "resume": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "coverLetter": {
+      "type": "text"
+    }
+  }
+}

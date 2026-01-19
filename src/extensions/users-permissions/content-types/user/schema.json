@@ -96,6 +96,12 @@
       "relation": "oneToMany",
       "target": "api::job.job",
       "mappedBy": "user"
+    },
+    "applications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::application.application",
+      "mappedBy": "user"
     }
   }
 }

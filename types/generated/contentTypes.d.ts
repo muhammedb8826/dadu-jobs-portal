@@ -496,6 +496,48 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiApplicationApplication extends Struct.CollectionTypeSchema {
+  collectionName: 'applications';
+  info: {
+    displayName: 'Application';
+    pluralName: 'applications';
+    singularName: 'application';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    applicationStatus: Schema.Attribute.Enumeration<
+      ['Applied', 'Shortlisted', 'Rejected']
+    > &
+      Schema.Attribute.DefaultTo<'Applied'>;
+    coverLetter: Schema.Attribute.Text;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    decision: Schema.Attribute.Enumeration<
+      ['Selected', 'Reserve', 'Not Selected']
+    > &
+      Schema.Attribute.DefaultTo<'Not Selected'>;
+    job: Schema.Attribute.Relation<'manyToOne', 'api::job.job'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::application.application'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    resume: Schema.Attribute.Media<'images' | 'files'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiCandidateProfileCandidateProfile
   extends Struct.CollectionTypeSchema {
   collectionName: 'candidate_profiles';
@@ -721,6 +763,10 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    applications: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::application.application'
+    >;
     approvalStatus: Schema.Attribute.Enumeration<
       ['Pending', 'Approved', 'Rejected', 'Needs Modification']
     >;
@@ -1264,6 +1310,10 @@ export interface PluginUsersPermissionsUser
     draftAndPublish: false;
   };
   attributes: {
+    applications: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::application.application'
+    >;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     candidate_profile: Schema.Attribute.Relation<
       'oneToOne',
@@ -1329,6 +1379,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::application.application': ApiApplicationApplication;
       'api::candidate-profile.candidate-profile': ApiCandidateProfileCandidateProfile;
       'api::category.category': ApiCategoryCategory;
       'api::company.company': ApiCompanyCompany;
