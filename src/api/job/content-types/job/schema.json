@@ -111,6 +111,12 @@
       "relation": "oneToMany",
       "target": "api::application.application",
       "mappedBy": "job"
+    },
+    "saved_jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::saved-job.saved-job",
+      "mappedBy": "job"
     }
   }
 }

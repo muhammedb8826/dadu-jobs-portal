@@ -808,6 +808,10 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     location: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     salary: Schema.Attribute.Component<'shared.salary-range', false>;
+    saved_jobs: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::saved-job.saved-job'
+    >;
     slug: Schema.Attribute.UID;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -819,6 +823,38 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     >;
     workplaceType: Schema.Attribute.Enumeration<
       ['Remote', 'On Site', 'Hybrid']
+    >;
+  };
+}
+
+export interface ApiSavedJobSavedJob extends Struct.CollectionTypeSchema {
+  collectionName: 'saved_jobs';
+  info: {
+    displayName: 'Saved Job';
+    pluralName: 'saved-jobs';
+    singularName: 'saved-job';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    job: Schema.Attribute.Relation<'manyToOne', 'api::job.job'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::saved-job.saved-job'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
     >;
   };
 }
@@ -1353,6 +1389,10 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    saved_jobs: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::saved-job.saved-job'
+    >;
     type: Schema.Attribute.Enumeration<['EMPLOYER', 'CANDIDATE']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1386,6 +1426,7 @@ declare module '@strapi/strapi' {
       'api::employer-profile.employer-profile': ApiEmployerProfileEmployerProfile;
       'api::global.global': ApiGlobalGlobal;
       'api::job.job': ApiJobJob;
+      'api::saved-job.saved-job': ApiSavedJobSavedJob;
       'api::skill.skill': ApiSkillSkill;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
