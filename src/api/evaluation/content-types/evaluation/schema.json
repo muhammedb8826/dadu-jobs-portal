@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "evaluations",
+  "info": {
+    "singularName": "evaluation",
+    "pluralName": "evaluations",
+    "displayName": "Evaluation"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "application": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::application.application",
+      "inversedBy": "evaluation"
+    },
+    "writtenExam": {
+      "type": "decimal"
+    },
+    "interview": {
+      "type": "decimal"
+    },
+    "practical": {
+      "type": "decimal"
+    },
+    "totalScore": {
+      "type": "decimal"
+    },
+    "rank": {
+      "type": "integer"
+    },
+    "notes": {
+      "type": "richtext"
+    }
+  }
+}

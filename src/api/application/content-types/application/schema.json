@@ -51,6 +51,12 @@
     },
     "coverLetter": {
       "type": "text"
+    },
+    "evaluation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::evaluation.evaluation",
+      "mappedBy": "application"
     }
   }
 }

@@ -519,6 +519,10 @@ export interface ApiApplicationApplication extends Struct.CollectionTypeSchema {
       ['Selected', 'Reserve', 'Not Selected']
     > &
       Schema.Attribute.DefaultTo<'Not Selected'>;
+    evaluation: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::evaluation.evaluation'
+    >;
     job: Schema.Attribute.Relation<'manyToOne', 'api::job.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -714,6 +718,43 @@ export interface ApiEmployerProfileEmployerProfile
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+  };
+}
+
+export interface ApiEvaluationEvaluation extends Struct.CollectionTypeSchema {
+  collectionName: 'evaluations';
+  info: {
+    displayName: 'Evaluation';
+    pluralName: 'evaluations';
+    singularName: 'evaluation';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    application: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::application.application'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    interview: Schema.Attribute.Decimal;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::evaluation.evaluation'
+    > &
+      Schema.Attribute.Private;
+    notes: Schema.Attribute.RichText;
+    practical: Schema.Attribute.Decimal;
+    publishedAt: Schema.Attribute.DateTime;
+    rank: Schema.Attribute.Integer;
+    totalScore: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    writtenExam: Schema.Attribute.Decimal;
   };
 }
 
@@ -1424,6 +1465,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::company.company': ApiCompanyCompany;
       'api::employer-profile.employer-profile': ApiEmployerProfileEmployerProfile;
+      'api::evaluation.evaluation': ApiEvaluationEvaluation;
       'api::global.global': ApiGlobalGlobal;
       'api::job.job': ApiJobJob;
       'api::saved-job.saved-job': ApiSavedJobSavedJob;
