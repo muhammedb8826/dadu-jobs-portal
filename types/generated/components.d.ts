@@ -56,6 +56,17 @@ export interface CommonSocialIcon extends Struct.ComponentSchema {
   };
 }
 
+export interface ComponentsFaq extends Struct.ComponentSchema {
+  collectionName: 'components_components_faqs';
+  info: {
+    displayName: 'FAQ';
+  };
+  attributes: {
+    description: Schema.Attribute.Blocks;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ComponentsForCandidates extends Struct.ComponentSchema {
   collectionName: 'components_components_for_candidates_s';
   info: {
@@ -317,6 +328,7 @@ declare module '@strapi/strapi' {
       'common.card': CommonCard;
       'common.link-with-icon': CommonLinkWithIcon;
       'common.social-icon': CommonSocialIcon;
+      'components.faq': ComponentsFaq;
       'components.for-candidates': ComponentsForCandidates;
       'components.for-employers': ComponentsForEmployers;
       'components.hero-section': ComponentsHeroSection;
