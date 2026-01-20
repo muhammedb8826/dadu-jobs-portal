@@ -1,5 +1,24 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface CommonCard extends Struct.ComponentSchema {
+  collectionName: 'components_common_cards';
+  info: {
+    displayName: 'Card';
+  };
+  attributes: {
+    description: Schema.Attribute.String;
+    icon: Schema.Attribute.JSON &
+      Schema.Attribute.CustomField<
+        'plugin::strapi-plugin-iconhub.iconhub',
+        {
+          storeIconData: true;
+          storeIconName: true;
+        }
+      >;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface CommonLinkWithIcon extends Struct.ComponentSchema {
   collectionName: 'components_common_link_with_icons';
   info: {
@@ -34,6 +53,57 @@ export interface CommonSocialIcon extends Struct.ComponentSchema {
         }
       >;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface ComponentsForCandidates extends Struct.ComponentSchema {
+  collectionName: 'components_components_for_candidates_s';
+  info: {
+    displayName: 'For Candidates ';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'common.card', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ComponentsForEmployers extends Struct.ComponentSchema {
+  collectionName: 'components_components_for_employers';
+  info: {
+    displayName: 'For Employers';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'common.card', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ComponentsHeroSection extends Struct.ComponentSchema {
+  collectionName: 'components_components_hero_sections';
+  info: {
+    displayName: 'Hero Section';
+  };
+  attributes: {
+    button: Schema.Attribute.Component<'components.link', true>;
+    heading: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    subHeading: Schema.Attribute.String;
+  };
+}
+
+export interface ComponentsHowItWorks extends Struct.ComponentSchema {
+  collectionName: 'components_components_how_it_works';
+  info: {
+    displayName: 'How it works';
+  };
+  attributes: {
+    forCandidates: Schema.Attribute.Component<
+      'components.for-candidates',
+      false
+    >;
+    forEmployers: Schema.Attribute.Component<'components.for-employers', false>;
+    heading: Schema.Attribute.String;
+    subHeading: Schema.Attribute.String;
   };
 }
 
@@ -244,8 +314,13 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'common.card': CommonCard;
       'common.link-with-icon': CommonLinkWithIcon;
       'common.social-icon': CommonSocialIcon;
+      'components.for-candidates': ComponentsForCandidates;
+      'components.for-employers': ComponentsForEmployers;
+      'components.hero-section': ComponentsHeroSection;
+      'components.how-it-works': ComponentsHowItWorks;
       'components.link': ComponentsLink;
       'layout.about-footer': LayoutAboutFooter;
       'layout.contact-footer': LayoutContactFooter;

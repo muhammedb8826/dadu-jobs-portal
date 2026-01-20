@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_components_for_candidates_s",
+  "info": {
+    "displayName": "For Candidates "
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "cards": {
+      "type": "component",
+      "component": "common.card",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

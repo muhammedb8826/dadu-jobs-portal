@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_components_how_it_works",
+  "info": {
+    "displayName": "How it works"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "subHeading": {
+      "type": "string"
+    },
+    "forCandidates": {
+      "type": "component",
+      "component": "components.for-candidates",
+      "repeatable": false
+    },
+    "forEmployers": {
+      "type": "component",
+      "component": "components.for-employers",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

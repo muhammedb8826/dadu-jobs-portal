@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_components_for_employers",
+  "info": {
+    "displayName": "For Employers"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "cards": {
+      "type": "component",
+      "component": "common.card",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
