@@ -1,4 +1,5 @@
 import type { StrapiApp } from '@strapi/strapi/admin';
+import { File } from '@strapi/icons';
 
 export default {
   config: {
@@ -36,6 +37,18 @@ export default {
         "Auth.form.welcome.subtitle": "Log in to your DADU Jobs Portal dashboard",
       },
     },
+  },
+  register(app: StrapiApp) {
+    app.addMenuLink({
+      to: '/reports/applications',
+      icon: File,
+      intlLabel: {
+        id: 'app.reports.applications',
+        defaultMessage: 'Applications Report',
+      },
+      Component: async () => import('./pages/ApplicationsReport'),
+      permissions: [],
+    });
   },
   bootstrap(app: StrapiApp) {
     console.log(app);
