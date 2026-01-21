@@ -5,52 +5,6 @@
 import { factories } from '@strapi/strapi';
 import type { Context } from 'koa';
 
-const resolveJobDocumentId = async (
-  strapi: any,
-  jobIdRaw: string
-): Promise<string | null> => {
-  const numericId = Number(jobIdRaw);
-  if (!Number.isNaN(numericId)) {
-    const jobs = await strapi.entityService.findMany('api::job.job', {
-      filters: { id: { $eq: numericId } },
-      fields: ['documentId'],
-      limit: 1,
-    });
-    const job = Array.isArray(jobs) ? jobs[0] : null;
-    return job?.documentId ?? null;
-  }
-
-  const jobs = await strapi.entityService.findMany('api::job.job', {
-    filters: { documentId: jobIdRaw } as any,
-    fields: ['documentId'],
-    limit: 1,
-  });
-  const job = Array.isArray(jobs) ? jobs[0] : null;
-  return job?.documentId ?? null;
-};
-
-const fetchReportApplications = async (
-  strapi: any,
-  jobDocumentId: string
-): Promise<any[]> => {
-  const baseParams = {
-    publicationState: 'preview' as const,
-    populate: {
-      user: {
-        populate: {
-          candidate_profile: true,
-        },
-      },
-      evaluation: true,
-    },
-  };
-
-  return strapi.entityService.findMany('api::application.application', {
-    filters: { job: { documentId: { $eq: jobDocumentId } } } as any,
-    ...baseParams,
-  });
-};
-
 export default factories.createCoreController('api::application.application', ({ strapi }) => ({
   /**
    * Return report rows for all applications of a specific job.
@@ -63,12 +17,38 @@ export default factories.createCoreController('api::application.application', ({
       ctx.throw(400, 'jobId param is required');
     }
 
-    const jobDocumentId = await resolveJobDocumentId(strapi, String(jobId));
-    if (!jobDocumentId) {
-      ctx.throw(400, 'jobId must be a valid job id or documentId');
-    }
+    const jobIdRaw = String(jobId);
+    const numericId = Number(jobIdRaw);
 
-    const applications = await fetchReportApplications(strapi, jobDocumentId);
+    const baseParams = {
+      publicationState: 'preview' as const,
+      populate: {
+        user: {
+          populate: {
+            candidate_profile: true,
+          },
+        },
+        evaluation: true,
+      },
+    };
+
+    const filters =
+      !Number.isNaN(numericId) && numericId > 0
+        ? {
+            $or: [
+              { job: { id: { $eq: numericId } } },
+              { job: { documentId: jobIdRaw } as any },
+            ],
+          }
+        : { job: { documentId: jobIdRaw } as any };
+
+    const applications = await strapi.entityService.findMany(
+      'api::application.application',
+      {
+        filters,
+        ...baseParams,
+      }
+    );
 
     const toScore = (value: unknown) => {
       const score = Number(value ?? 0);
@@ -119,13 +99,38 @@ export default factories.createCoreController('api::application.application', ({
       ctx.throw(400, 'jobId param is required');
     }
 
-    // Reuse the JSON report logic to build rows
-    const jobDocumentId = await resolveJobDocumentId(strapi, String(jobId));
-    if (!jobDocumentId) {
-      ctx.throw(400, 'jobId must be a valid job id or documentId');
-    }
+    const jobIdRaw = String(jobId);
+    const numericId = Number(jobIdRaw);
 
-    const applications = await fetchReportApplications(strapi, jobDocumentId);
+    const baseParams = {
+      publicationState: 'preview' as const,
+      populate: {
+        user: {
+          populate: {
+            candidate_profile: true,
+          },
+        },
+        evaluation: true,
+      },
+    };
+
+    const filters =
+      !Number.isNaN(numericId) && numericId > 0
+        ? {
+            $or: [
+              { job: { id: { $eq: numericId } } },
+              { job: { documentId: jobIdRaw } as any },
+            ],
+          }
+        : { job: { documentId: jobIdRaw } as any };
+
+    const applications = await strapi.entityService.findMany(
+      'api::application.application',
+      {
+        filters,
+        ...baseParams,
+      }
+    );
 
     const toScore = (value: unknown) => {
       const score = Number(value ?? 0);
