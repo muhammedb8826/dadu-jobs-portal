@@ -532,6 +532,10 @@ export interface ApiApplicationApplication extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     resume: Schema.Attribute.Media<'images' | 'files'>;
+    selectedCgpa: Schema.Attribute.Decimal;
+    selectedDegree: Schema.Attribute.String;
+    selectedFieldOfStudy: Schema.Attribute.String;
+    totalExperienceYears: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

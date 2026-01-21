@@ -57,6 +57,18 @@
       "relation": "oneToOne",
       "target": "api::evaluation.evaluation",
       "mappedBy": "application"
+    },
+    "selectedDegree": {
+      "type": "string"
+    },
+    "selectedFieldOfStudy": {
+      "type": "string"
+    },
+    "selectedCgpa": {
+      "type": "decimal"
+    },
+    "totalExperienceYears": {
+      "type": "decimal"
     }
   }
 }
