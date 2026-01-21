@@ -25,6 +25,7 @@ type ReportRow = {
   writtenExam: number | null;
   interview: number | null;
   practical: number | null;
+  total: number | null;
   status: string | null;
   rank: number | null;
   decision: string | null;
@@ -38,6 +39,7 @@ const columns = [
   'Written Exam',
   'Interview',
   'Practical',
+  'Total',
   'Status',
   'Rank',
   'Decision',
@@ -154,7 +156,9 @@ export default function ApplicationsReportPage() {
                   <Typography textColor="neutral800">{row.cgpa ?? '-'}</Typography>
                 </Td>
                 <Td>
-                  <Typography textColor="neutral800">{row.experience ?? '-'}</Typography>
+                  <Typography textColor="neutral800">
+                    {row.experience != null ? `${row.experience} years` : '-'}
+                  </Typography>
                 </Td>
                 <Td>
                   <Typography textColor="neutral800">{row.writtenExam ?? '-'}</Typography>
@@ -165,6 +169,9 @@ export default function ApplicationsReportPage() {
                 <Td>
                   <Typography textColor="neutral800">{row.practical ?? '-'}</Typography>
                 </Td>
+              <Td>
+                <Typography textColor="neutral800">{row.total ?? '-'}</Typography>
+              </Td>
                 <Td>
                   <Typography textColor="neutral800">{row.status ?? '-'}</Typography>
                 </Td>

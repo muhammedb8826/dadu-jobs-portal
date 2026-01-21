@@ -72,6 +72,11 @@ export default factories.createCoreController('api::application.application', ({
         app.selectedFieldOfStudy || '',
       ].filter(Boolean);
 
+      const writtenExam = Number(evaluation.writtenExam ?? 0);
+      const interview = Number(evaluation.interview ?? 0);
+      const practical = Number(evaluation.practical ?? 0);
+      const total = writtenExam + interview + practical;
+
       return {
         fullName,
         education: educationParts.join(' - '),
@@ -80,6 +85,7 @@ export default factories.createCoreController('api::application.application', ({
         writtenExam: evaluation.writtenExam,
         interview: evaluation.interview,
         practical: evaluation.practical,
+        total,
         status: app.applicationStatus,
         rank: evaluation.rank ?? index + 1,
         decision: app.decision,
@@ -154,6 +160,11 @@ export default factories.createCoreController('api::application.application', ({
         app.selectedFieldOfStudy || '',
       ].filter(Boolean);
 
+      const writtenExam = Number(evaluation.writtenExam ?? 0);
+      const interview = Number(evaluation.interview ?? 0);
+      const practical = Number(evaluation.practical ?? 0);
+      const total = writtenExam + interview + practical;
+
       return {
         'Full Name': fullName,
         'Education': educationParts.join(' - '),
@@ -162,6 +173,7 @@ export default factories.createCoreController('api::application.application', ({
         'Written Exam': evaluation.writtenExam,
         'Interview': evaluation.interview,
         'Practical': evaluation.practical,
+        'Total': total,
         'Status': app.applicationStatus,
         'Rank': evaluation.rank ?? index + 1,
         'Decision': app.decision,
