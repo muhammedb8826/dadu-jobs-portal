@@ -99,10 +99,10 @@ export default function ApplicationsReportPage() {
           <Flex gap={4} alignItems="flex-end">
             <Box style={{ width: 240 }}>
               <Field.Root name="jobId">
-                <Field.Label>Job ID</Field.Label>
+              <Field.Label>Job Document ID</Field.Label>
                 <TextInput
                   name="jobId"
-                  placeholder="e.g. 7"
+                placeholder="e.g. lab770xfukrpqcb7j6bf5j0p"
                   value={jobId}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                     setJobId(event.target.value)
