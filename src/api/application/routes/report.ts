@@ -5,7 +5,7 @@ export default {
       path: '/applications/report/:jobId',
       handler: 'application.report',
       config: {
-        // auth: false,
+        auth: false,
         policies: [],
         middlewares: [],
       },
@@ -15,7 +15,7 @@ export default {
       path: '/applications/report-excel/:jobId',
       handler: 'application.reportExcel',
       config: {
-        // auth: false,
+        auth: false,
         policies: [],
         middlewares: [],
       },
