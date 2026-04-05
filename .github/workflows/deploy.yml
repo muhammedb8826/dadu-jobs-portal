@@ -1,3 +1,7 @@
+# Builds on Node 22 in CI, then uploads without node_modules.
+# On cPanel: use "Setup Node.js App" with Node 20+, then in the app directory run:
+#   npm ci --omit=dev
+# (Or include node_modules in the upload instead—large/slow over FTP.)
 name: Deploy Strapi App to cPanel via FTP
 
 on:
@@ -17,9 +21,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 22.18.0
+        cache: npm
 
     - name: Install dependencies
-      run: npm install --force
+      run: npm ci
 
     - name: Build Strapi app
       run: npm run build
@@ -34,7 +39,11 @@ jobs:
         local-dir: ./
         protocol: ftp
         exclude: |
-         .git/**
-         .github/**
+          .git/**
+          .github/**
           node_modules/**
-      # Optionally add any other files you don't need on the remote server
+          .env
+          .env.*
+          **/.env
+          **/.env.*
+          *.log
