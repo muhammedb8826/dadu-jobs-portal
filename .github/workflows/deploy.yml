@@ -22,7 +22,14 @@ jobs:
       run: npm install
 
     - name: Build Strapi app
-      run: npm run build
+      run: NODE_OPTIONS="--max-old-space-size=4096" npm run build
+
+     # ✅ Remove dev stuff before deploy
+    - name: Clean unnecessary files
+      run: |
+        rm -rf node_modules
+        rm -rf .git
+        rm -rf .github  
 
     - name: Deploy to cPanel via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -36,5 +43,6 @@ jobs:
         exclude: |
          .git/**
          .github/**
-
+         node_modules/**
+          .env
       # Optionally add any other files you don't need on the remote server
