@@ -36,6 +36,5 @@ jobs:
         exclude: |
          .git/**
          .github/**
-         src/**
-          tests/**
-          .strapi/**
+
+      # Optionally add any other files you don't need on the remote server
