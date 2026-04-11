@@ -18,16 +18,7 @@
       "type": "uid"
     },
     "description": {
-      "type": "customField",
-      "customField": "plugin::jodit-editor.jodit",
-      "options": {
-        "height": 400,
-        "readonly": false,
-        "buttons": "source, bold, italic, underline, strikethrough, superscript, subscript, eraser, font, fontsize, brush, paragraph, classSpan, |, ul, ol, indent, outdent, left, center, right, justify, |, link, unlink, strapiMedia, image, file, video, table, hr, symbols, lineHeight, |, copy, cut, paste, copyformat, selectall, undo, redo, fullsize, print, preview, find, spellcheck, about",
-        "toolbar": true,
-        "fonts": "",
-        "webp": ""
-      }
+      "type": "blocks"
     },
     "workplaceType": {
       "type": "enumeration",

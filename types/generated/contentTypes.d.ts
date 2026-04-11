@@ -642,7 +642,7 @@ export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
+    description: Schema.Attribute.Blocks;
     employers: Schema.Attribute.Relation<
       'oneToMany',
       'api::employer-profile.employer-profile'
@@ -782,7 +782,7 @@ export interface ApiEvaluationEvaluation extends Struct.CollectionTypeSchema {
       'api::evaluation.evaluation'
     > &
       Schema.Attribute.Private;
-    notes: Schema.Attribute.RichText;
+    notes: Schema.Attribute.Blocks;
     practical: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
     rank: Schema.Attribute.Integer;
@@ -914,18 +914,7 @@ export interface ApiJobJob extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     deadline: Schema.Attribute.Date;
-    description: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        'plugin::jodit-editor.jodit',
-        {
-          buttons: 'source, bold, italic, underline, strikethrough, superscript, subscript, eraser, font, fontsize, brush, paragraph, classSpan, |, ul, ol, indent, outdent, left, center, right, justify, |, link, unlink, strapiMedia, image, file, video, table, hr, symbols, lineHeight, |, copy, cut, paste, copyformat, selectall, undo, redo, fullsize, print, preview, find, spellcheck, about';
-          fonts: '';
-          height: 400;
-          readonly: false;
-          toolbar: true;
-          webp: '';
-        }
-      >;
+    description: Schema.Attribute.Blocks;
     experience: Schema.Attribute.Enumeration<
       ['Entry', 'Mid', 'Senior', 'Director']
     >;

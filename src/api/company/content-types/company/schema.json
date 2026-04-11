@@ -21,14 +21,14 @@
         "images"
       ]
     },
+    "description": {
+      "type": "blocks"
+    },
     "website": {
       "type": "string"
     },
     "location": {
       "type": "string"
-    },
-    "description": {
-      "type": "richtext"
     },
     "industry": {
       "type": "enumeration",
