@@ -1,0 +1,40 @@
+services:
+  strapi-db:
+    image: postgres:16-alpine
+    container_name: strapi-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mame
+      POSTGRES_DB: dadu_jobs
+    volumes:
+      - strapi-data:/var/lib/postgresql/data
+    networks:
+      - jobs-net
+
+  strapi:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PUBLIC_URL=http://localhost:3001
+    container_name: strapi-app
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - STRAPI_ADMIN_BACKEND_URL=http://localhost:3001
+    env_file: .env
+    ports:
+      - "3001:3001"
+    networks:
+      - charity-net
+    depends_on:
+      - strapi-db
+
+networks:
+  jobs-net:
+    name: jobs-shared-network
+    driver: bridge
+
+volumes:
+  strapi-data:
