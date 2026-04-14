@@ -18,16 +18,16 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/charity-portal
+            cd /var/www/jobs
             git pull origin main
             
             # Create the shared network if it doesn't exist
-            docker network inspect charity-shared-network >/dev/null 2>&1 || \
-            docker network create charity-shared-network
+            docker network inspect jobs-shared-network >/dev/null 2>&1 || \
+            docker network create jobs-shared-network
 
             # Build and restart using the same config that worked locally
             # Note: We pass the production URL as a build arg
-            docker compose build --build-arg PUBLIC_URL=https://api.makofoundation.us
+            docker compose build --build-arg PUBLIC_URL=https://jobs-portal.bluemoongt.com
             docker compose up -d
             
             # Prune old images to save space on the VPS
