@@ -1,7 +1,7 @@
 services:
-  strapi-db:
+  jobs-db:
     image: postgres:16-alpine
-    container_name: strapi-db
+    container_name: jobs-db
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -17,19 +17,19 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - PUBLIC_URL=http://localhost:3001
+        - PUBLIC_URL=http://localhost:3002
     container_name: strapi-app
     restart: always
     environment:
-      - NODE_ENV=development
-      - STRAPI_ADMIN_BACKEND_URL=http://localhost:3001
+      - NODE_ENV=production
+      - STRAPI_ADMIN_BACKEND_URL=http://localhost:3002
     env_file: .env
     ports:
-      - "3001:3001"
+      - "3002:3002"
     networks:
-      - charity-net
+      - jobs-net
     depends_on:
-      - strapi-db
+      - jobs-db
 
 networks:
   jobs-net:
