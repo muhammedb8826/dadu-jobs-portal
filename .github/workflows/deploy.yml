@@ -1,3 +1,5 @@
+# Install + build on GitHub (enough RAM). Upload node_modules — do NOT run npm i on cPanel
+# (shared hosting OOM-kills Strapi installs: "Killed").
 name: Deploy Strapi App to cPanel via FTP
 
 on:
@@ -17,15 +19,19 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 22.18.0
+        cache: npm
 
     - name: Install dependencies
-      run: npm install --force
+      run: npm ci
 
     - name: Build Strapi app
       env:
         NODE_ENV: production
         PUBLIC_URL: https://jobs-api.bluemoongt.com
       run: npm run build
+
+    - name: Prune dev dependencies
+      run: npm prune --omit=dev
 
     - name: Deploy to cPanel via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -37,7 +43,13 @@ jobs:
         local-dir: ./
         protocol: ftp
         exclude: |
-         .git/**
-         .github/**
-          node_modules/**
-      # Optionally add any other files you don't need on the remote server
+          .git/**
+          .github/**
+          .env
+          .env.*
+          **/.env
+          **/.env.*
+          *.log
+          tmp/**
+          .cache/**
+          .tmp/**
