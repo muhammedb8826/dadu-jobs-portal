@@ -7,7 +7,7 @@ const USER_OWNED_UIDS = [
 export default {
   register({ strapi }: { strapi: any }) {
     // Link user-owned content via Document Service (REST strips `user` for Authenticated).
-    // Content-type DB lifecycles alone are unreliable for this on Strapi 5 Document API.
+    // Only users-permissions users — never Strapi Admin users (different documentIds).
     strapi.documents.use(async (context: any, next: () => Promise<unknown>) => {
       if (
         USER_OWNED_UIDS.includes(context.uid) &&
@@ -16,10 +16,30 @@ export default {
       ) {
         const ctx = strapi.requestContext.get();
         const user = ctx?.state?.user as
-          | { id?: number | string; documentId?: string }
+          | {
+              id?: number | string;
+              documentId?: string;
+              roles?: unknown[];
+              role?: unknown;
+              provider?: string;
+              confirmed?: boolean;
+            }
           | undefined;
-        if (user?.documentId || user?.id != null) {
-          // Document Service prefers documentId for relations
+
+        const strategy = ctx?.state?.auth?.strategy?.name as string | undefined;
+        const isAdminUser =
+          !user ||
+          strategy === "admin" ||
+          Array.isArray(user.roles); // admin::user has roles[]; UP user has role
+
+        const isContentUser =
+          !isAdminUser &&
+          (strategy === "users-permissions" ||
+            user.role != null ||
+            typeof user.confirmed === "boolean" ||
+            typeof user.provider === "string");
+
+        if (isContentUser && (user.documentId || user.id != null)) {
           context.params.data.user = user.documentId || user.id;
         }
       }

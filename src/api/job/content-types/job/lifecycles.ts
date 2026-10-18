@@ -7,10 +7,28 @@ function linkAuthenticatedUser(data?: Record<string, unknown>) {
 
   const ctx = strapi.requestContext.get();
   const user = ctx?.state?.user as
-    | { id?: number | string; documentId?: string }
+    | {
+        id?: number | string;
+        documentId?: string;
+        roles?: unknown[];
+        role?: unknown;
+        confirmed?: boolean;
+        provider?: string;
+      }
     | undefined;
 
   if (!user?.id) return;
+  // Admin panel users must not be written to plugin::users-permissions.user
+  if (Array.isArray(user.roles) || ctx?.state?.auth?.strategy?.name === "admin") {
+    return;
+  }
+  if (
+    user.role == null &&
+    typeof user.confirmed !== "boolean" &&
+    typeof user.provider !== "string"
+  ) {
+    return;
+  }
 
   data.user = user.id;
 }

@@ -10,10 +10,27 @@ function linkAuthenticatedUser(data?: Record<string, unknown>) {
 
   const ctx = strapi.requestContext.get();
   const user = ctx?.state?.user as
-    | { id?: number | string; documentId?: string }
+    | {
+        id?: number | string;
+        documentId?: string;
+        roles?: unknown[];
+        role?: unknown;
+        confirmed?: boolean;
+        provider?: string;
+      }
     | undefined;
 
   if (!user?.id) return;
+  if (Array.isArray(user.roles) || ctx?.state?.auth?.strategy?.name === "admin") {
+    return;
+  }
+  if (
+    user.role == null &&
+    typeof user.confirmed !== "boolean" &&
+    typeof user.provider !== "string"
+  ) {
+    return;
+  }
 
   // Prefer numeric id for the join column (Strapi/users-permissions)
   data.user = user.id;
