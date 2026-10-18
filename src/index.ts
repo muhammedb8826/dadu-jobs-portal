@@ -1,20 +1,34 @@
-// import type { Core } from '@strapi/strapi';
-
 export default {
-  /**
-   * An asynchronous register function that runs before
-   * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
-   */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register() {},
 
   /**
-   * An asynchronous bootstrap function that runs before
-   * your application gets started.
-   *
-   * This gives you an opportunity to set up your data model,
-   * run jobs, or perform some special logic.
+   * Media Library settings live in the plugin store (not plugins.ts).
+   * Disable sharp optimization so Windows does not fail uploads with
+   * EBUSY when unlinking temp "optimized-*" files.
    */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+  async bootstrap({ strapi }: { strapi: any }) {
+    try {
+      const uploadService = strapi.plugin("upload").service("upload");
+      const current = (await uploadService.getSettings()) || {};
+      if (
+        current.sizeOptimization === false &&
+        current.responsiveDimensions === false &&
+        current.autoOrientation === false
+      ) {
+        return;
+      }
+
+      await uploadService.setSettings({
+        ...current,
+        sizeOptimization: false,
+        responsiveDimensions: false,
+        autoOrientation: false,
+      });
+      strapi.log.info(
+        "Upload settings: sizeOptimization/responsiveDimensions/autoOrientation disabled (Windows EBUSY workaround)"
+      );
+    } catch (error) {
+      strapi.log.warn("Could not update upload settings:", error);
+    }
+  },
 };

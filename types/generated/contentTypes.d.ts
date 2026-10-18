@@ -571,7 +571,6 @@ export interface ApiCandidateProfileCandidateProfile
       'api::candidate-profile.candidate-profile'
     > &
       Schema.Attribute.Private;
-    ownerUserId: Schema.Attribute.Integer;
     phone: Schema.Attribute.String;
     profilePicture: Schema.Attribute.Media<'images' | 'files'>;
     publishedAt: Schema.Attribute.DateTime;

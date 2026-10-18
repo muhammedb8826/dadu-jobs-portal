@@ -1,4 +1,13 @@
 export default ({ env }) => ({
+  // Disable sharp optimization on Windows — temp file unlink often hits EBUSY
+  // ("resource busy or locked") and returns 500 from POST /api/upload.
+  upload: {
+    config: {
+      sizeOptimization: false,
+      responsiveDimensions: false,
+    },
+  },
+
   email: {
     config: {
       provider: 'nodemailer',
