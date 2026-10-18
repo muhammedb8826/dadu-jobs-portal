@@ -89,7 +89,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::employer-profile.employer-profile",
-      "inversedBy": "user"
+      "mappedBy": "user"
     },
     "jobs": {
       "type": "relation",

@@ -41,7 +41,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "employer_profile"
+      "inversedBy": "employer_profile"
     }
   }
 }
