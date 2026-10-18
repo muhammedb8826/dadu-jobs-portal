@@ -37,6 +37,10 @@
     "phone": {
       "type": "string"
     },
+    "ownerUserId": {
+      "type": "integer",
+      "private": false
+    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",
