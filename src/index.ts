@@ -2,6 +2,7 @@ const USER_OWNED_UIDS = [
   "api::job.job",
   "api::candidate-profile.candidate-profile",
   "api::employer-profile.employer-profile",
+  "api::saved-job.saved-job",
 ] as const;
 
 export default {

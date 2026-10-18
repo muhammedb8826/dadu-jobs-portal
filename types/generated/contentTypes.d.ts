@@ -959,7 +959,7 @@ export interface ApiSavedJobSavedJob extends Struct.CollectionTypeSchema {
     singularName: 'saved-job';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
