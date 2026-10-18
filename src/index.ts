@@ -1,5 +1,29 @@
 export default {
-  register() {},
+  register({ strapi }: { strapi: any }) {
+    // Windows often locks temp files during/after multipart upload cleanup.
+    // An uncaught EBUSY unlink would otherwise kill the Strapi process.
+    process.on("uncaughtException", (err: NodeJS.ErrnoException) => {
+      if (err?.code === "EBUSY" && err?.syscall === "unlink") {
+        strapi.log.warn(
+          `Ignoring Windows EBUSY unlink (${err.path || "temp file"})`
+        );
+        return;
+      }
+      strapi.log.error(err);
+      process.exit(1);
+    });
+
+    process.on("unhandledRejection", (reason: unknown) => {
+      const err = reason as NodeJS.ErrnoException | undefined;
+      if (err?.code === "EBUSY" && err?.syscall === "unlink") {
+        strapi.log.warn(
+          `Ignoring Windows EBUSY unlink rejection (${err.path || "temp file"})`
+        );
+        return;
+      }
+      strapi.log.error(reason);
+    });
+  },
 
   /**
    * Media Library settings live in the plugin store (not plugins.ts).
