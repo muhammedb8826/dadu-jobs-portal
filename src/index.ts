@@ -1,5 +1,31 @@
+const USER_OWNED_UIDS = [
+  "api::job.job",
+  "api::candidate-profile.candidate-profile",
+  "api::employer-profile.employer-profile",
+] as const;
+
 export default {
   register({ strapi }: { strapi: any }) {
+    // Link user-owned content via Document Service (REST strips `user` for Authenticated).
+    // Content-type DB lifecycles alone are unreliable for this on Strapi 5 Document API.
+    strapi.documents.use(async (context: any, next: () => Promise<unknown>) => {
+      if (
+        USER_OWNED_UIDS.includes(context.uid) &&
+        (context.action === "create" || context.action === "update") &&
+        context.params?.data
+      ) {
+        const ctx = strapi.requestContext.get();
+        const user = ctx?.state?.user as
+          | { id?: number | string; documentId?: string }
+          | undefined;
+        if (user?.documentId || user?.id != null) {
+          // Document Service prefers documentId for relations
+          context.params.data.user = user.documentId || user.id;
+        }
+      }
+      return next();
+    });
+
     // Windows often locks temp files during/after multipart upload cleanup.
     // An uncaught EBUSY unlink would otherwise kill the Strapi process.
     process.on("uncaughtException", (err: NodeJS.ErrnoException) => {
