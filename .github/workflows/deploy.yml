@@ -31,9 +31,12 @@ jobs:
             docker network inspect jobs-shared-network >/dev/null 2>&1 || \
               docker network create jobs-shared-network
 
+            echo "==> Removing stale containers (name conflicts)"
+            docker rm -f jobs-db jobs-api 2>/dev/null || true
+
             echo "==> Building and starting containers"
             docker compose build --build-arg PUBLIC_URL=https://jobs-api.bluemoongt.com
-            docker compose up -d
+            docker compose up -d --remove-orphans
 
             echo "==> Cleaning old images"
             docker image prune -f

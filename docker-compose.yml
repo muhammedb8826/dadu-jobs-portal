@@ -53,7 +53,7 @@ services:
 networks:
   jobs-net:
     name: jobs-shared-network
-    driver: bridge
+    external: true
 
 volumes:
   strapi-data:
