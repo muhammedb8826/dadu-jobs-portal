@@ -1,22 +1,41 @@
-FROM node:20-alpine
+# syntax=docker/dockerfile:1
 
-RUN apk add --no-cache vips-dev build-base gcc autoconf automake libtool make nasm zlib-dev libpng-dev
+FROM node:20-alpine AS build
+RUN apk add --no-cache \
+  build-base \
+  gcc \
+  autoconf \
+  automake \
+  zlib-dev \
+  libpng-dev \
+  vips-dev \
+  git \
+  python3
 
 WORKDIR /opt/app
 
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-# Set environment for the build process
-ARG PUBLIC_URL=http://localhost:3002
+ARG PUBLIC_URL=https://jobs-api.bluemoongt.com
 ENV PUBLIC_URL=$PUBLIC_URL
-ENV NODE_ENV=production 
+ENV NODE_ENV=production
 
 RUN npm run build
 
-EXPOSE 3002
+FROM node:20-alpine AS runner
+RUN apk add --no-cache vips-dev
 
-# We use 'start' to serve the static admin panel we just built
+WORKDIR /opt/app
+
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=3016
+
+COPY --from=build /opt/app ./
+
+EXPOSE 3016
+
 CMD ["npm", "run", "start"]

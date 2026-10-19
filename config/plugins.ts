@@ -12,17 +12,17 @@ export default ({ env }) => ({
     config: {
       provider: 'nodemailer',
       providerOptions: {
-        host: process.env.SMTP_HOST || 'smtp.gmail.com',
-        port: process.env.SMTP_PORT || 465,
+        host: env('SMTP_HOST', 'smtp.gmail.com'),
+        port: env.int('SMTP_PORT', 465),
         secure: true,
         auth: {
-          user: process.env.SMTP_USERNAME || 'muhammedb8826@gmail.com',
-          pass: process.env.SMTP_PASSWORD || 'mlzo pduh igpc bkif',
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
         },
       },
       settings: {
-        defaultFrom: process.env.SMTP_FROM_EMAIL || 'muhammedb8826@gmail.com',
-        defaultReplyTo: process.env.SMTP_REPLY_TO_EMAIL || 'muhammedb8826@gmail.com',
+        defaultFrom: env('SMTP_FROM_EMAIL'),
+        defaultReplyTo: env('SMTP_REPLY_TO_EMAIL'),
       },
     },
   },
@@ -34,7 +34,7 @@ export default ({ env }) => ({
       },
       emailConfirmation: {
         enabled: true,
-        redirectUrl: `${env('FRONTEND_URL', 'https://jobs.qenenia.com')}/email-confirmation`,
+        redirectUrl: `${env('FRONTEND_URL', 'https://jobs.bluemoongt.com')}/email-confirmation`,
       },
     },
   },

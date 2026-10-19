@@ -1,6 +1,4 @@
-# Install + build on GitHub (enough RAM). Upload node_modules — do NOT run npm i on cPanel
-# (shared hosting OOM-kills Strapi installs: "Killed").
-name: Deploy Strapi App to cPanel via FTP
+name: Deploy Jobs API (Strapi)
 
 on:
   push:
@@ -8,48 +6,27 @@ on:
       - main
 
 jobs:
-  web-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22.18.0
-        cache: npm
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            cd /var/www/dadu-jobs-portal
 
-    - name: Install dependencies
-      run: npm ci
+            git pull origin main
 
-    - name: Build Strapi app
-      env:
-        NODE_ENV: production
-        PUBLIC_URL: https://jobs-api.bluemoongt.com
-      run: npm run build
+            docker network inspect jobs-shared-network >/dev/null 2>&1 || \
+              docker network create jobs-shared-network
 
-    - name: Prune dev dependencies
-      run: npm prune --omit=dev
-
-    - name: Deploy to cPanel via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: ${{ secrets.CPANEL_DIR }}
-        local-dir: ./
-        protocol: ftp
-        exclude: |
-          .git/**
-          .github/**
-          .env
-          .env.*
-          **/.env
-          **/.env.*
-          *.log
-          tmp/**
-          .cache/**
-          .tmp/**
+            docker compose build --build-arg PUBLIC_URL=https://jobs-api.bluemoongt.com
+            docker compose up -d
+            docker image prune -f

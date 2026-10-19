@@ -4,32 +4,51 @@ services:
     container_name: jobs-db
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mame
-      POSTGRES_DB: dadu_jobs
+      POSTGRES_USER: ${DATABASE_USERNAME:-strapi}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?Set DATABASE_PASSWORD in .env}
+      POSTGRES_DB: ${DATABASE_NAME:-dadu_jobs}
     volumes:
       - strapi-data:/var/lib/postgresql/data
     networks:
       - jobs-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME:-strapi} -d ${DATABASE_NAME:-dadu_jobs}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   strapi:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
       args:
-        - PUBLIC_URL=http://localhost:3002
-    container_name: strapi-app
+        PUBLIC_URL: ${PUBLIC_URL:-https://jobs-api.bluemoongt.com}
+    container_name: jobs-api
     restart: always
+    env_file:
+      - .env
     environment:
-      - NODE_ENV=production
-      - STRAPI_ADMIN_BACKEND_URL=http://localhost:3002
-    env_file: .env
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3016
+      PUBLIC_URL: ${PUBLIC_URL:-https://jobs-api.bluemoongt.com}
+      FRONTEND_URL: ${FRONTEND_URL:-https://jobs.bluemoongt.com}
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: jobs-db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME:-dadu_jobs}
+      DATABASE_USERNAME: ${DATABASE_USERNAME:-strapi}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:?Set DATABASE_PASSWORD in .env}
+      DATABASE_SSL: "false"
     ports:
-      - "3002:3002"
+      - "3016:3016"
+    volumes:
+      - strapi-uploads:/opt/app/public/uploads
     networks:
       - jobs-net
     depends_on:
-      - jobs-db
+      jobs-db:
+        condition: service_healthy
 
 networks:
   jobs-net:
@@ -38,3 +57,4 @@ networks:
 
 volumes:
   strapi-data:
+  strapi-uploads:
