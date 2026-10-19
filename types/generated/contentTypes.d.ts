@@ -504,7 +504,7 @@ export interface ApiApplicationApplication extends Struct.CollectionTypeSchema {
     singularName: 'application';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     applicationStatus: Schema.Attribute.Enumeration<
