@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PUBLIC_URL: ${PUBLIC_URL:-https://jobs-api.bluemoongt.com}
+        PUBLIC_URL: ${PUBLIC_URL:-https://jobs-api.dadu.edu.et}
     container_name: jobs-api
     restart: always
     env_file:
@@ -31,8 +31,8 @@ services:
       NODE_ENV: production
       HOST: 0.0.0.0
       PORT: 3016
-      PUBLIC_URL: ${PUBLIC_URL:-https://jobs-api.bluemoongt.com}
-      FRONTEND_URL: ${FRONTEND_URL:-https://jobs.bluemoongt.com}
+      PUBLIC_URL: ${PUBLIC_URL:-https://jobs-api.dadu.edu.et}
+      FRONTEND_URL: ${FRONTEND_URL:-https://jobs.dadu.edu.et}
       DATABASE_CLIENT: postgres
       DATABASE_HOST: jobs-db
       DATABASE_PORT: 5432
