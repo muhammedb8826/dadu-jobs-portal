@@ -43,7 +43,7 @@ services:
     ports:
       - "3016:3016"
     volumes:
-      - strapi-uploads:/opt/app/public/uploads
+      - ./public/uploads:/opt/app/public/uploads
     networks:
       - jobs-net
     depends_on:
@@ -57,4 +57,3 @@ networks:
 
 volumes:
   strapi-data:
-  strapi-uploads:
